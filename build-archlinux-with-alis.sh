@@ -2,6 +2,15 @@
 #set -e
 ##################################################################################################################
 #
+#
+#
+# This is just a place holder to match Erik's info
+#
+#
+#
+#
+##################################################################################################################
+#
 #   DO NOT JUST RUN THIS. EXAMINE AND JUDGE. RUN AT YOUR OWN RISK.
 #
 ##################################################################################################################
@@ -75,12 +84,12 @@ echo
 			echo "################################################################"
 			yay -S --noconfirm $package
 
-		elif pacman -Qi trizen &> /dev/null; then
+		elif pacman -Qi paru &> /dev/null; then
 
 			echo "################################################################"
-			echo "######### Installing with trizen"
+			echo "######### Installing with paru"
 			echo "################################################################"
-			trizen -S --noconfirm --needed --noedit $package
+			paru -S --noconfirm --needed --noedit $package
 
 		fi
 
@@ -124,9 +133,11 @@ echo
 	mkdir $buildFolder
 	cp -r /usr/share/archiso/configs/releng/ $buildFolder/archiso
 	echo
-	echo "Git clone ALIS"
+	echo "Git clone ALIS + ALIS-DEV"
 	mkdir $buildFolder/archiso/airootfs/alis
-	git clone https://github.com/erikdubois/alis $buildFolder/archiso/airootfs/alis
+	git clone https://github.com/arcolinuxiso/alis $buildFolder/archiso/airootfs/alis
+	mkdir $buildFolder/archiso/airootfs/alis-dev
+	git clone https://github.com/arcolinuxiso/alis $buildFolder/archiso/airootfs/alis-dev
 
 echo
 echo "################################################################## "
@@ -161,8 +172,12 @@ echo
 	REPLACE='  ["/alis/start.sh"]="0:0:755"'
 	find $buildFolder/archiso/profiledef.sh -type f -exec sed -i "/$FIND/a $REPLACE" {} \;
 
+	FIND='livecd-sound'
+	REPLACE='  ["/alis-dev/start.sh"]="0:0:755"'
+	find $buildFolder/archiso/profiledef.sh -type f -exec sed -i "/$FIND/a $REPLACE" {} \;
+
 	echo "copy nanorc"
-	cp /etc/nanorc 	$buildFolder/archiso/airootfs/etc/nanorc
+	cp nanorc 	$buildFolder/archiso/airootfs/etc/nanorc
 
 #echo
 #echo "################################################################## "
@@ -217,18 +232,6 @@ echo
 	echo "Moving pkglist.x86_64.txt"
 	echo "########################"
 	cp $buildFolder/iso/arch/pkglist.x86_64.txt  $outFolder/$isoLabel".pkglist.txt"
-
-#echo
-#echo "##################################################################"
-#tput setaf 2
-#echo "Phase 9 :"
-#echo "- Making sure we start with a clean slate next time"
-#tput sgr0
-#echo "################################################################## "
-#echo
-
-	#echo "Deleting the build folder if one exists - takes some time"
-	#[ -d $buildFolder ] && sudo rm -rf $buildFolder
 
 echo
 echo "##################################################################"
