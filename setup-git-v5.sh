@@ -27,8 +27,8 @@ git config --global pull.rebase false
 git config --global user.name "Brett Crisp"
 git config --global user.email "brettcrisp2@gmail.com"
 sudo git config --system core.editor micro
-#git config --global credential.helper cache
-#git config --global credential.helper 'cache --timeout=32000'
+git config --global credential.helper cache
+git config --global credential.helper 'cache --timeout=15778800'
 git config --global push.default simple
 
 git remote set-url origin git@github.com:Sugarcrisp-ui/$project
