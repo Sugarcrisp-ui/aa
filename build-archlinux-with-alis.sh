@@ -179,9 +179,6 @@ echo
 	echo "copy nanorc"
 	cp nanorc 	$buildFolder/archiso/airootfs/etc/nanorc
 
-	echo "copy pacman.conf"
-	cp pacman.conf 	$buildFolder/archiso/airootfs/etc/pacman.conf
-
 #echo
 #echo "################################################################## "
 #tput setaf 2
